@@ -11,19 +11,17 @@ API_TOKEN = "vlQNENybEJjhJFm3Bio0Ci6qwh22gxFX"  # or st.secrets["API_TOKEN"]
 
 # --- Example Prompts Data Structure ---
 EXAMPLE_PROMPTS = {
-    "DXCompetitiveInformation": [
-        "How does Roche’s portfolio compare to Siemens Healthineers (SHS) in terms of breadth, depth, and innovation?",
-        "How do Roche’s analyzers compare to Siemens Healthineers’?"
+    "SnapLogic PROD MemoryUsage": [
+        "Provide me the current memory usage of all the hosts?"
     ],
-    "Brandville": [
-        "What is the Siemens logo?",
-        "What are the Siemens brand colors and their hex codes?"
+    "SnapLogic PROD CPU-Usage": [
+        "Which host had highest CPU usage in last 1 hour?"
     ]
 }
 
 # --- Streamlit Page Setup ---
 st.set_page_config(
-    page_title="Knowledge Assistant with MCP",
+    page_title="HC SnapLogic Assistant with MCP",
     page_icon="🤖",
     layout="wide"
 )
@@ -166,7 +164,7 @@ def handle_prompt_submission(prompt_text):
     )
 
     # Local spinner near the chat / button instead of global "Running …"
-    with st.spinner("SAM is thinking..."):
+    with st.spinner("Operations Agent is thinking..."):
         data = get_assistant_response(st.session_state.session_id, messages_tuple)
     
     # Store the full response (for raw view in sidebar)
@@ -181,7 +179,7 @@ def handle_prompt_submission(prompt_text):
 
 def display_main_content():
     """Displays the main layout of the application."""
-    st.title("🤖 Knowledge Assistant with MCP")
+    st.title("🤖 HC SnapLogic Assistant with MCP")
     st.write("Ask questions and explore example prompts for different use case categories.")
     
     col1, col2 = st.columns(2)
@@ -191,23 +189,23 @@ def display_main_content():
         st.write("Select a category to see example prompts:")
         
         with st.container(border=True):
-            st.markdown("##### 🚀 Competitive Information for DX Business")
-            st.write("Discover opportunities and competitive insights.")
+            st.markdown("##### 🚀 CPU Usage Information for SnapLogic PROD Environment")
+            st.write("Discover CPU Usage insights.")
             st.button(
-                "Show DX Competitive Examples",
+                "Show CPU Usage Examples",
                 on_click=set_active_category,
-                args=("DXCompetitiveInformation",),
+                args=("SnapLogic PROD CPU-Usage",),
                 key="b_leads",
                 use_container_width=True
             )
         
         with st.container(border=True):
-            st.markdown("##### 🎨 Brand & Communication")
-            st.write("Ask about brand guidelines, assets, and visual identity.")
+            st.markdown("##### 🎨 Memory Usage Information for SnapLogic PROD Environment")
+            st.write("Ask about Memory Usage Information for SnapLogic PROD Environment.")
             st.button(
-                "Show Brand Examples",
+                "Show SnapLogic Memory Usage Examples",
                 on_click=set_active_category,
-                args=("Brandville",),
+                args=("SnapLogic PROD MemoryUsage",),
                 key="b_brand",
                 use_container_width=True
             )
@@ -276,4 +274,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
