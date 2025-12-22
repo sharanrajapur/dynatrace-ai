@@ -164,7 +164,7 @@ def handle_prompt_submission(prompt_text):
     )
 
     # Local spinner near the chat / button instead of global "Running …"
-    with st.spinner("Operations Agent is thinking..."):
+    with st.spinner("SnapAgent is thinking..."):
         data = get_assistant_response(st.session_state.session_id, messages_tuple)
     
     # Store the full response (for raw view in sidebar)
@@ -274,6 +274,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
