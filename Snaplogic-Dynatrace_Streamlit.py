@@ -6,8 +6,8 @@ from datetime import timedelta
 
 # --- Configuration ---
 # It's recommended to use st.secrets for storing sensitive information like API tokens
-API_URL = "https://elastic.snaplogic.com/api/1/rest/slsched/feed/SIE_Health_Dev/SHS_IT_DEI_HC_AI/SnapLogic_Internal/SHSAgentDriver_TriggeredTask"
-API_TOKEN = "vlQNENybEJjhJFm3Bio0Ci6qwh22gxFX"  # or st.secrets["API_TOKEN"]
+API_URL = "https://elastic.snaplogic.com/api/1/rest/slsched/feed/SIE_Health_Dev/SHS_IT_DEI_HC_AI/SnapLogic_Internal/HC_AgentTask"
+API_TOKEN = "GC3xRnzHm5L7lvIlFqsSuMjbgdA6odDt"  # or st.secrets["API_TOKEN"]
 
 # --- Example Prompts Data Structure ---
 EXAMPLE_PROMPTS = {
@@ -274,6 +274,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
