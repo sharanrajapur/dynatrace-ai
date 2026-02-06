@@ -9,19 +9,10 @@ from datetime import timedelta
 API_URL = "https://elastic.snaplogic.com/api/1/rest/slsched/feed/SIE_Health_Dev/SHS_IT_DEI_HC_AI/SnapLogic_Internal/HC_AgentTask"
 API_TOKEN = "GC3xRnzHm5L7lvIlFqsSuMjbgdA6odDt"  # or st.secrets["API_TOKEN"]
 
-# --- Example Prompts Data Structure ---
-EXAMPLE_PROMPTS = {
-    "SnapLogic PROD MemoryUsage": [
-        "Provide me the current memory usage of all the hosts?"
-    ],
-    "SnapLogic PROD CPU-Usage": [
-        "Which host had highest CPU usage in last 1 hour?"
-    ]
-}
 
 # --- Streamlit Page Setup ---
 st.set_page_config(
-    page_title="HC SnapLogic Assistant with MCP",
+    page_title="HC Demo Agent",
     page_icon="🤖",
     layout="wide"
 )
@@ -103,7 +94,7 @@ def initialize_session_state():
     if "messages" not in st.session_state:
         st.session_state.messages = []
     if "active_category" not in st.session_state:
-        st.session_state.active_category = "MemoryUsage"
+        st.session_state.active_category = "Install Base Insights"
     if "last_full_data" not in st.session_state:
         st.session_state.last_full_data = None
 
@@ -164,7 +155,7 @@ def handle_prompt_submission(prompt_text):
     )
 
     # Local spinner near the chat / button instead of global "Running …"
-    with st.spinner("SnapAgent is thinking..."):
+    with st.spinner("Agent is thinking..."):
         data = get_assistant_response(st.session_state.session_id, messages_tuple)
     
     # Store the full response (for raw view in sidebar)
@@ -179,76 +170,12 @@ def handle_prompt_submission(prompt_text):
 
 def display_main_content():
     """Displays the main layout of the application."""
-    st.title("🤖 HC SnapLogic Assistant with MCP")
+    st.title("🤖 HC Demo Agent")
     st.write("Ask questions and explore example prompts for different use case categories.")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.subheader("Use Case Categories")
-        st.write("Select a category to see example prompts:")
-        
-        with st.container(border=True):
-            st.markdown("##### 🚀 CPU Usage Information for SnapLogic PROD Environment")
-            st.write("Discover CPU Usage insights.")
-            st.button(
-                "Show CPU Usage Examples",
-                on_click=set_active_category,
-                args=("SnapLogic PROD CPU-Usage",),
-                key="b_leads",
-                use_container_width=True
-            )
-        
-        with st.container(border=True):
-            st.markdown("##### 🎨 Memory Usage Information for SnapLogic PROD Environment")
-            st.write("Ask about Memory Usage Information for SnapLogic PROD Environment.")
-            st.button(
-                "Show SnapLogic Memory Usage Examples",
-                on_click=set_active_category,
-                args=("SnapLogic PROD MemoryUsage",),
-                key="b_brand",
-                use_container_width=True
-            )
-    
-    with col2:
-        st.subheader("About This Assistant")
-        st.write(
-            """
-            This assistant is powered by:
-            - **SnapLogic** as the orchestration and MCP backend  
-            - A **knowledge graph / RAG backend** for retrieving relevant documents and data  
-            - A chat-style interface implemented in **Streamlit**
-            """
-        )
-        
-        st.markdown("#### How it works")
-        st.markdown(
-            """
-            1. You select an example or type your own question.  
-            2. The app sends your query and conversation history to a SnapLogic task.  
-            3. The backend orchestrates retrieval and reasoning across multiple systems.  
-            4. You see the response in this chat and can inspect the full JSON in the sidebar.
-            """
-        )
-    
-    st.markdown("---")
-    st.subheader(f"Example Prompts for: {st.session_state.active_category}")
-    prompts_to_show = EXAMPLE_PROMPTS.get(st.session_state.active_category, [])
-    for i, prompt in enumerate(prompts_to_show):
-        st.button(
-            prompt,
-            on_click=handle_prompt_submission,
-            args=(prompt,),
-            use_container_width=True,
-            key=f"ex_{st.session_state.active_category}_{i}"
-        )
-
-    st.markdown("---")
-
 
 def display_chat_interface():
     """Manages the chat display and response processing."""
-    st.subheader("Chat with SnapAgent")
+    st.subheader("Chat with Agent")
     
     chat_container = st.container()
     with chat_container:
@@ -274,9 +201,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
 
